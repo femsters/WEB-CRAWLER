@@ -1,3 +1,0 @@
-https://www.youtube.com/watch?v=7najSDZcn-U (Trello tutorial)
-git remote add origin https://github.com/selvinsa/WEB-CRAWLER.git
-git push -u origin master
