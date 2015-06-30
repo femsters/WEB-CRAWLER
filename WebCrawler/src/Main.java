@@ -5,9 +5,12 @@ import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 
+import database.*;
+
 public class Main {
 
     public static ArrayList<String> visited;
+    public static ArrayList<String> listWords;
 
 	public static void main(String[] args) throws IOException {
 
@@ -15,15 +18,21 @@ public class Main {
 	    //String userInput = "http://jsoup.org/";
 
 		visited = new ArrayList<String>();
+		listWords = new ArrayList<String>();
 		visited.add(userInput);
 		crawl(userInput);
+
+        Collections.sort(listWords);
+        WordsRecord record = new WordsRecord(listWords);
+
+		URLHistory history = new URLHistory(visited);
 	}
 
 	public static void crawl(String x) throws IOException {
 		String url = x;
 		String a = null;
 		String linkAtt = url.replaceAll("http://", "");
-		int depth = 6;
+		int depth = 3;
 
 		Document doc = Jsoup.connect(url).get();
 		String text = doc.text();
@@ -32,7 +41,9 @@ public class Main {
         String[] docWords = text.split(" ");
 
         for( String word : docWords) {
-            //System.out.println(word);
+            if(!listWords.contains(word)) {
+                listWords.add(word);
+            }
         }
 
 		// get all links and recursively call the crawl method
